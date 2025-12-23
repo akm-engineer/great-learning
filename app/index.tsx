@@ -52,10 +52,7 @@ export default function Home() {
 					</Text>
 				</XStack>
 
-				<SearchBar
-					value={localSearch} // 🔥 Shows text instantly
-					onChange={setLocalSearch}
-				/>
+				<SearchBar value={localSearch} onChange={setLocalSearch} />
 
 				<FilterBar
 					type={typeFilter}
