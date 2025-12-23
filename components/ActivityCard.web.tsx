@@ -1,26 +1,7 @@
+import { statusColors, typeColors, typeLabel } from '@/data/theme-utlis';
 import { useRouter } from 'expo-router';
 import { Button, Card, Text, XStack, YStack } from 'tamagui';
-import { Activity, ActivityStatus, ActivityType } from '../store/activityStore';
-
-const statusColors: Record<ActivityStatus, string> = {
-	not_started: '#8E8E93',
-	in_progress: '#FF9500',
-	completed: '#34C759',
-};
-
-const typeColors: Record<ActivityType, string> = {
-	class: '#0A84FF',
-	assignment: '#FFD60A',
-	quiz: '#0A84FF',
-	discussion: '#FFD60A',
-};
-
-const typeLabel: Record<ActivityType, string> = {
-	class: 'Online Class',
-	assignment: 'Assignment',
-	quiz: 'Quiz',
-	discussion: 'Discussion',
-};
+import { Activity } from '../store/activityStore';
 
 export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 	const router = useRouter();
@@ -31,16 +12,19 @@ export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 			p="$6"
 			br="$8"
 			mb="$5"
-			borderWidth={1}
-			borderColor="$gray10"
+			bw={1}
+			bc="$gray6"
+			bg="$background"
+			hoverStyle={{ scale: 0.98, bc: '$gray8' }}
+			pressStyle={{ scale: 0.96 }}
 			cursor="pointer">
 			<YStack space="$4">
-				{/* Title + Type Badge */}
+				{/* Title + type */}
 				<XStack jc="space-between" ai="center">
 					<Text
 						fontSize={24}
 						fontWeight="700"
-						color="#111"
+						color="$color12"
 						maxWidth="85%"
 						lineHeight={32}>
 						{activity.title}
@@ -48,7 +32,7 @@ export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 
 					<Text
 						bg={typeColors[activity.type]}
-						color={activity.type === 'assignment' ? '#333' : 'white'}
+						color="white"
 						px="$3"
 						py="$1.5"
 						br="$4"
@@ -58,7 +42,7 @@ export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 					</Text>
 				</XStack>
 
-				{/* Status + info */}
+				{/* Status */}
 				<XStack ai="center" gap="$3">
 					<Text
 						bg={statusColors[activity.status]}
@@ -72,24 +56,22 @@ export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 					</Text>
 
 					{activity.duration && (
-						<Text fontSize={14} color="$gray10">
+						<Text fontSize={14} color="$gray11">
 							• {activity.duration} mins
 						</Text>
 					)}
 				</XStack>
 
-				{/* CTA Button */}
+				{/* Action button */}
 				<Button
-					bg="#0A84FF"
+					bg="$blue10"
 					color="white"
 					br="$6"
 					px="$6"
 					py="$2.5"
 					fontWeight="700"
-					fontSize={15}
-					alignSelf="flex-start"
-					hoverStyle={{ bg: '#006fdd' }}
-					pressStyle={{ scale: 0.97 }}>
+					hoverStyle={{ bg: '$blue9' }}
+					pressStyle={{ scale: 0.96 }}>
 					{activity.status === 'completed'
 						? 'Review'
 						: activity.status === 'in_progress'

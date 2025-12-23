@@ -1,14 +1,11 @@
 // app/_layout.tsx
+import { ThemeProvider } from '@/context/theme-context';
 import { Stack } from 'expo-router';
-import { TamaguiProvider, Theme } from 'tamagui';
-import { config } from '../tamagui.config';
 
 export default function RootLayout() {
 	return (
-		<TamaguiProvider config={config}>
-			<Theme name="light">
-				<Stack screenOptions={{ headerShown: false }} />
-			</Theme>
-		</TamaguiProvider>
+		<ThemeProvider>
+			<Stack screenOptions={{ headerShown: false }} />
+		</ThemeProvider>
 	);
 }

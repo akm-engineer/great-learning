@@ -1,26 +1,7 @@
+import { statusColors, typeColors, typeLabel } from '@/data/theme-utlis';
 import { useRouter } from 'expo-router';
 import { Button, Card, Text, XStack, YStack } from 'tamagui';
-import { Activity, ActivityStatus, ActivityType } from '../store/activityStore';
-
-const statusColors: Record<ActivityStatus, string> = {
-	not_started: '#8E8E93',
-	in_progress: '#FF9500',
-	completed: '#34C759',
-};
-
-const typeColors: Record<ActivityType, string> = {
-	class: '#0A84FF',
-	assignment: '#FFD60A',
-	quiz: '#0A84FF',
-	discussion: '#FFD60A',
-};
-
-const typeLabel: Record<ActivityType, string> = {
-	class: 'Online Class',
-	assignment: 'Assignment',
-	quiz: 'Quiz',
-	discussion: 'Discussion',
-};
+import { Activity } from '../store/activityStore';
 
 export default function ActivityCardNative({
 	activity,
@@ -28,25 +9,25 @@ export default function ActivityCardNative({
 	activity: Activity;
 }) {
 	const router = useRouter();
+
 	return (
 		<Card
 			onPress={() => router.push(`/activity/${activity.id}`)}
-			bg="white"
 			p="$4"
-			mb="$3"
-			br="$4"
+			br="$6"
+			mb="$4"
 			bordered
-			borderColor="$gray5"
-			pressStyle={{ scale: 0.98, opacity: 0.9 }}>
+			bg="$background"
+			bc="$gray6"
+			pressStyle={{ scale: 0.97 }}>
 			<YStack space="$3">
-				{/* Title + Type */}
-				<XStack jc="space-between" ai="flex-start" gap="$3">
+				<XStack jc="space-between" ai="center">
 					<Text
 						flex={1}
 						fontSize={18}
-						numberOfLines={2}
-						fontWeight="600"
-						color="$gray12">
+						fontWeight="700"
+						color="$color12"
+						numberOfLines={2}>
 						{activity.title}
 					</Text>
 
@@ -57,25 +38,30 @@ export default function ActivityCardNative({
 						py="$1"
 						br="$2"
 						fontSize={11}
-						fontWeight="600">
+						fontWeight="700">
 						{typeLabel[activity.type]}
 					</Text>
 				</XStack>
 
-				{/* Status row */}
 				<XStack jc="space-between" ai="center">
 					<Text
 						bg={statusColors[activity.status]}
+						color="white"
 						px="$3"
 						py="$1.5"
 						br="$6"
-						color="white"
-						fontWeight="600"
-						fontSize={12}>
+						fontSize={12}
+						fontWeight="700">
 						{activity.status.replace('_', ' ')}
 					</Text>
 
-					<Button bg="#0A84FF" color="white" br="$8" px="$4" size="$3">
+					<Button
+						bg="$blue10"
+						color="white"
+						br="$8"
+						px="$4"
+						size="$3"
+						fontWeight="700">
 						{activity.status === 'completed'
 							? 'Review'
 							: activity.status === 'in_progress'

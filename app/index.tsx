@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 
 import FilterBar from '@/components/FilterBar';
 import SearchBar from '@/components/SearchBar';
+import { useThemeSwitch } from '@/context/theme-context';
 import { mockActivities } from '@/data/activities';
 import { useDebounce } from '@/hooks/use-debounce';
 import { Platform } from 'react-native';
-import { ScrollView, Text, XStack, YStack } from 'tamagui';
+import { Button, ScrollView, Text, XStack, YStack } from 'tamagui';
 import ActivityCard from '../components/ActivityCard';
 import { useActivityStore } from '../store/activityStore';
-
 export default function Home() {
 	const { activities, typeFilter, statusFilter, search } = useActivityStore();
-
+	const { theme, toggleTheme } = useThemeSwitch();
 	const setActivities = useActivityStore((s) => s.setActivities);
 	const setTypeFilter = useActivityStore((s) => s.setTypeFilter);
 	const setStatusFilter = useActivityStore((s) => s.setStatusFilter);
@@ -43,13 +43,25 @@ export default function Home() {
 	return (
 		<ScrollView bg="$gray2">
 			<YStack p="$4" pt="$5" maxWidth={1200} w="100%" als="center">
-				<XStack ai="baseline" gap="$2" mb="$3">
-					<Text fontSize={32} fontWeight="700" color="$gray12">
-						Activities
-					</Text>
-					<Text fontSize={32} fontWeight="400" color="$gray10">
-						({filtered.length})
-					</Text>
+				<XStack justifyContent={'space-between'}>
+					<XStack ai="baseline" gap="$2" mb="$3">
+						<Text fontSize={32} fontWeight="700" color="$gray12">
+							Activities
+						</Text>
+						<Text fontSize={32} fontWeight="400" color="$gray10">
+							({filtered.length})
+						</Text>
+					</XStack>
+					<Button
+						mt="$3"
+						size={Platform.OS === 'web' ? '$4' : '$2'}
+						bg="$gray5"
+						color="$gray12"
+						br="$6"
+						px="$3"
+						onPress={toggleTheme}>
+						{theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+					</Button>
 				</XStack>
 
 				<SearchBar value={localSearch} onChange={setLocalSearch} />
