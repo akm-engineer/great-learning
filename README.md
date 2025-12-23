@@ -215,6 +215,20 @@ MIT
 
 Built as an assignment submission for a frontend developer position, showcasing modern React Native development skills with emphasis on design excellence and cross-platform compatibility.
 
+## Testing Note
+
+This project uses Expo SDK 51 and React Native 0.81+ which depend on React 19.
+
+React 19 does not ship `react-test-renderer`, which is required by Jest,
+React Native Testing Library, and jest-expo. As of now, these libraries are not
+compatible with React 19.
+
+Therefore, unit testing cannot be added until the ecosystem updates
+to support React 19.
+
+If needed, I can provide a version built on Expo SDK 49/React Native 0.72
+using React 18 with full Jest + RTL support
+
 ## 🙏 Acknowledgments
 
 - **Tamagui** - Universal design system
