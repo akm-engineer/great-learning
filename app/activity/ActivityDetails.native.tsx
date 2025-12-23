@@ -4,6 +4,8 @@ import { Button, Card, H4, Paragraph, Text, XStack, YStack } from 'tamagui';
 import DetailsTabs from '@/components/details-tab';
 import ActivitySkeleton from '@/components/ui/activity-skelton';
 import BackButton from '@/components/ui/back-button';
+import { mockActivities } from '@/data/activities';
+import { useEffect } from 'react';
 import { useActivityStore } from '../../store/activityStore';
 
 export default function ActivityDetailsNative() {
@@ -11,6 +13,14 @@ export default function ActivityDetailsNative() {
 	const activity = useActivityStore((s) =>
 		s.activities.find((a) => a.id === id),
 	);
+	const { activities } = useActivityStore();
+	const setActivities = useActivityStore((s) => s.setActivities);
+
+	useEffect(() => {
+		if (activities.length === 0) {
+			setActivities(mockActivities);
+		}
+	}, []);
 
 	if (!activity) return <ActivitySkeleton />;
 

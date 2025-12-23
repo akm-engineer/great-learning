@@ -28,18 +28,12 @@ export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 	return (
 		<Card
 			onPress={() => router.push(`/activity/${activity.id}`)}
-			bg="white"
 			p="$6"
 			br="$8"
 			mb="$5"
-			shadowColor="rgba(0,0,0,0.12)"
-			shadowRadius={18}
-			shadowOffset={{ width: 0, height: 6 }}
-			hoverStyle={{
-				shadowRadius: 26,
-				shadowColor: 'rgba(0,0,0,0.18)',
-				scale: 1.015,
-			}}>
+			borderWidth={1}
+			borderColor="$gray10"
+			cursor="pointer">
 			<YStack space="$4">
 				{/* Title + Type Badge */}
 				<XStack jc="space-between" ai="center">

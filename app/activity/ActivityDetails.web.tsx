@@ -1,7 +1,9 @@
 import DetailsTabs from '@/components/details-tab';
 import ActivitySkeleton from '@/components/ui/activity-skelton';
 import BackButton from '@/components/ui/back-button';
+import { mockActivities } from '@/data/activities';
 import { useLocalSearchParams } from 'expo-router';
+import { useEffect } from 'react';
 import {
 	Button,
 	Card,
@@ -19,6 +21,14 @@ export default function ActivityDetailsWeb() {
 	const activity = useActivityStore((s) =>
 		s.activities.find((a) => a.id === id),
 	);
+	const { activities } = useActivityStore();
+	const setActivities = useActivityStore((s) => s.setActivities);
+
+	useEffect(() => {
+		if (activities.length === 0) {
+			setActivities(mockActivities);
+		}
+	}, []);
 
 	if (!activity) return <ActivitySkeleton />;
 
