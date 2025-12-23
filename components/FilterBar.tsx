@@ -1,57 +1,81 @@
-import { useState } from 'react';
-import { Platform } from 'react-native';
-import { Button, ChevronDown, XStack, YStack } from 'tamagui';
+import {
+	Book,
+	CheckCircle2,
+	ClipboardList,
+	Clock,
+} from '@tamagui/lucide-icons';
+import { Button, Card, Text, XStack, YStack } from 'tamagui';
 import { ActivityStatus, ActivityType } from '../store/activityStore';
 
-const typeFilters: (ActivityType | 'all')[] = [
-	'all',
-	'class',
-	'assignment',
-	'quiz',
-	'discussion',
+const typeFilters: { key: ActivityType | 'all'; label: string; icon: any }[] = [
+	{ key: 'all', label: 'All Activities', icon: ClipboardList },
+	{ key: 'class', label: 'Classes', icon: Book },
+	{ key: 'assignment', label: 'Assignments', icon: ClipboardList },
+	{ key: 'quiz', label: 'Quizzes', icon: ClipboardList },
+	{ key: 'discussion', label: 'Discussions', icon: ClipboardList },
 ];
 
-const statusFilters: (ActivityStatus | 'all')[] = [
-	'all',
-	'not_started',
-	'in_progress',
-	'completed',
+const statusFilters: {
+	key: ActivityStatus | 'all';
+	label: string;
+	icon: any;
+}[] = [
+	{ key: 'all', label: 'Any Status', icon: ClipboardList },
+	{ key: 'not_started', label: 'Not Started', icon: Clock },
+	{ key: 'in_progress', label: 'In Progress', icon: Clock },
+	{ key: 'completed', label: 'Completed', icon: CheckCircle2 },
 ];
 
 export default function FilterBar({ type, status, setType, setStatus }: any) {
-	const [open, setOpen] = useState(false);
 	return (
-		<YStack space="$2" mb="$3">
-			{/* Type Filter */}
-			<XStack gap={5} fw="wrap">
-				{typeFilters.map((t) => (
-					<Button
-						key={t}
-						fontSize={Platform.OS === 'android' ? 13 : 20}
-						br="$2"
-						size="$2"
-						px="$4"
-						bg={type === t ? '#1E3A8A' : '#d6d7d9ff'}
-						color={type === t ? 'white' : '#374151'}
-						onPress={() => setType(t)}>
-						{t.charAt(0).toUpperCase() + t.slice(1)}
-					</Button>
-				))}
-			</XStack>
+		<YStack space="$4" mb="$4">
+			{/* TYPE FILTER */}
+			<Card bordered padded elevate size="$4">
+				<Text fontSize={16} fontWeight="600" mb="$2">
+					Filter by Type
+				</Text>
 
-			{/* Status Filter */}
-			<XStack>
-				<Button
-					size="$3"
-					px="$6"
-					br="$5"
-					iconAfter={ChevronDown}
-					bg="$gray6"
-					color="$gray12"
-					onPress={() => setOpen(true)}>
-					More
-				</Button>
-			</XStack>
+				<XStack gap="$2" fw="wrap">
+					{typeFilters.map(({ key, label, icon: Icon }) => (
+						<Button
+							key={key}
+							size="$3"
+							br="$6"
+							px="$4"
+							chromeless={type !== key}
+							bg={type === key ? '#1E3A8A' : '#E5E7EB'}
+							color={type === key ? 'white' : '#374151'}
+							icon={Icon}
+							onPress={() => setType(key)}>
+							{label}
+						</Button>
+					))}
+				</XStack>
+			</Card>
+
+			{/* STATUS FILTER */}
+			<Card bordered padded elevate size="$4">
+				<Text fontSize={16} fontWeight="600" mb="$2">
+					Filter by Status
+				</Text>
+
+				<XStack gap="$2" fw="wrap">
+					{statusFilters.map(({ key, label, icon: Icon }) => (
+						<Button
+							key={key}
+							size="$3"
+							br="$6"
+							px="$4"
+							chromeless={status !== key}
+							bg={status === key ? '#1E3A8A' : '#E5E7EB'}
+							color={status === key ? 'white' : '#374151'}
+							icon={Icon}
+							onPress={() => setStatus(key)}>
+							{label}
+						</Button>
+					))}
+				</XStack>
+			</Card>
 		</YStack>
 	);
 }
