@@ -39,8 +39,7 @@ export default function ActivityCardWeb({ activity }: { activity: Activity }) {
 				shadowRadius: 26,
 				shadowColor: 'rgba(0,0,0,0.18)',
 				scale: 1.015,
-			}}
-			animation="bouncy">
+			}}>
 			<YStack space="$4">
 				{/* Title + Type Badge */}
 				<XStack jc="space-between" ai="center">

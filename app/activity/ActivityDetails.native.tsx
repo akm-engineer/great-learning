@@ -1,5 +1,9 @@
 import { useLocalSearchParams } from 'expo-router';
 import { Button, Card, H4, Paragraph, Text, XStack, YStack } from 'tamagui';
+
+import DetailsTabs from '@/components/details-tab';
+import ActivitySkeleton from '@/components/ui/activity-skelton';
+import BackButton from '@/components/ui/back-button';
 import { useActivityStore } from '../../store/activityStore';
 
 export default function ActivityDetailsNative() {
@@ -8,19 +12,20 @@ export default function ActivityDetailsNative() {
 		s.activities.find((a) => a.id === id),
 	);
 
-	if (!activity) return <Text>Activity not found</Text>;
+	if (!activity) return <ActivitySkeleton />;
 
 	return (
 		<YStack f={1} bg="$gray2" p="$4" pt="$6" space="$4">
-			{/* Title */}
-			<H4 color="$gray12" fontSize={24} lineHeight={30} fontWeight="800">
+			<XStack w="100%" jc="flex-start">
+				<BackButton />
+			</XStack>
+
+			<H4 fontSize={26} pb="$2" fontWeight="800" color="$gray12">
 				{activity.title}
 			</H4>
 
-			{/* Detail Card */}
 			<Card bg="white" p="$4" br="$6" shadowColor="#0002" shadowRadius={8}>
 				<YStack space="$3">
-					{/* Type + Status */}
 					<XStack jc="space-between" ai="center">
 						<Text
 							bg="$blue10"
@@ -51,27 +56,15 @@ export default function ActivityDetailsNative() {
 						</Text>
 					</XStack>
 
-					{/* Info */}
-					<YStack>
-						<Text fontSize={16} fontWeight="600" color="$gray12">
-							Activity Details
-						</Text>
-
-						<Paragraph mt="$1" color="$gray10" lineHeight={20} fontSize={14}>
-							This activity is part of your learning journey. Complete it to
-							progress further in your program.
-						</Paragraph>
-					</YStack>
+					<Paragraph color="$gray10" lineHeight={20} fontSize={14}>
+						This activity is part of your learning journey. Complete it to
+						progress further.
+					</Paragraph>
 
 					{activity.duration && (
-						<XStack ai="center" gap="$1" mt="$2">
-							<Text fontSize={15} color="$gray11">
-								Duration:
-							</Text>
-							<Text fontSize={15} color="$gray12" fontWeight="700">
-								{activity.duration} mins
-							</Text>
-						</XStack>
+						<Text fontSize={15} color="$gray12">
+							Duration: <Text fontWeight="800">{activity.duration} mins</Text>
+						</Text>
 					)}
 
 					<Button
@@ -81,7 +74,6 @@ export default function ActivityDetailsNative() {
 						px="$5"
 						py="$2"
 						mt="$3"
-						fontSize={15}
 						fontWeight="700">
 						{activity.status === 'completed'
 							? 'Review Activity'
@@ -91,6 +83,9 @@ export default function ActivityDetailsNative() {
 					</Button>
 				</YStack>
 			</Card>
+
+			{/* ➤ ADVANCED TABS (Udemy-style) */}
+			<DetailsTabs />
 		</YStack>
 	);
 }

@@ -1,4 +1,3 @@
-// THIS IS YOUR MOBILE CARD – unchanged
 import { useRouter } from 'expo-router';
 import { Button, Card, Text, XStack, YStack } from 'tamagui';
 import { Activity, ActivityStatus, ActivityType } from '../store/activityStore';
@@ -38,7 +37,6 @@ export default function ActivityCardNative({
 			br="$4"
 			bordered
 			borderColor="$gray5"
-			animation="quick"
 			pressStyle={{ scale: 0.98, opacity: 0.9 }}>
 			<YStack space="$3">
 				{/* Title + Type */}
